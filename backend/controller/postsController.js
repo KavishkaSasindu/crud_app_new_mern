@@ -86,4 +86,25 @@ const updatePost = async (request, response) => {
   }
 };
 
-module.exports = { createPost, getPosts, onePost, updatePost };
+// delete post
+const deletePost = async (request, response) => {
+  const { id } = request.params;
+  try {
+    const deleteOne = await PostModel.findByIdAndDelete(id);
+    if (!deleteOne) {
+      return response.status(404).json({
+        message: "post not found and deleted",
+      });
+    }
+    return response.status(200).json({
+      message: "post deleted",
+    });
+  } catch (error) {
+    return response.status(400).json({
+      message: "error",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createPost, getPosts, onePost, updatePost, deletePost };
