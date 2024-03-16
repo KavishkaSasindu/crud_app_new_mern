@@ -66,6 +66,24 @@ const onePost = async (request, response) => {
 };
 
 // update Post
-const updatePost = async (request, response) => {};
+const updatePost = async (request, response) => {
+  const { id } = request.params;
+  try {
+    const updatedPost = await PostModel.findByIdAndUpdate(id);
+    if (!updatedPost) {
+      return response.status(404).json({
+        message: "not been updated",
+      });
+    }
+    return response.status(200).json({
+      message: "post updated",
+    });
+  } catch (error) {
+    return response.status(400).json({
+      message: "error",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = { createPost, getPosts, onePost };
