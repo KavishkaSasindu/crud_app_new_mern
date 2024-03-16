@@ -69,7 +69,7 @@ const onePost = async (request, response) => {
 const updatePost = async (request, response) => {
   const { id } = request.params;
   try {
-    const updatedPost = await PostModel.findByIdAndUpdate(id);
+    const updatedPost = await PostModel.findByIdAndUpdate(id, request.body);
     if (!updatedPost) {
       return response.status(404).json({
         message: "not been updated",
@@ -86,4 +86,4 @@ const updatePost = async (request, response) => {
   }
 };
 
-module.exports = { createPost, getPosts, onePost };
+module.exports = { createPost, getPosts, onePost, updatePost };
